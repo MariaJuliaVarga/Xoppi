@@ -1,0 +1,91 @@
+import produto from "../models/produto";
+
+class produtoController{
+    static async createProduto(req, res){
+        try{
+            const foto = req.file ? req.file.filename : null;
+            const {nome, quantidade, valor, descricao, fabricante} = req.body;
+
+            const novoProduto = new produto({
+                nome, 
+                fabricante,
+                quantidade,
+                foto,
+                valor,
+                descricao });
+            await novoProduto.save();
+            res.status(201).json(novoProduto);
+        }
+        catch(error){
+            console.error('Erro ao cadastrar produto:', error);
+            res.status(500).send('Erro interno');
+        }
+    }
+
+    static async getAllProdutos(req, res){
+        try{
+            const produto = await produto.findAll();
+            res.json(produto);
+        }
+        catch(error){
+            console.error('Erro ao carregar produtos:', error);
+            res.status(500).json({message: 'Erro interno ao buscar Produtos!!'})
+        }
+    }
+
+    static async getProduroById(req, res){
+        try{
+            const {id} = req.params;
+            const produtoExistente = await produto.findById(id);
+
+            if(!produtoExistente){
+                return res.status(404).json({ message: 'Produto nao encontrado'});
+            }
+            res.json(produtoExistente);
+        }
+        catch (error){
+            console.error('Erro ao carregar o produto:', error);
+            res.status(500).json({message: 'Erro interno ao buscar Produto!!'})
+        }
+    }
+
+    static async updateProduto(req, res){
+        try{
+            const {id} = req.params;
+            const foto = req.file ? req.file.filename : null;
+            const {nome, fabricante,quantidade,valor, descricao } = req.body; 
+            
+        const produtoAtualizado = {
+            nome,
+            fabricante,
+            quantidade,
+            valor,
+            descricao
+        }; 
+            
+            if (foto) {
+            produtoAtualizado.foto = foto;
+            }
+            await produto.updateProduto(id, produtoAtualizado); 
+        }
+            catch (error){
+            console.error('Erro ao carregar o produto:', error);
+            res.status(500).json({message: 'Erro interno ao buscar Produto!!'})
+        }
+    }
+
+    static async deletarProduto(req, res){
+        try{
+            const {id} = req.params;
+            await produto.delete(id);
+            return res.status(204).send(); 
+        }
+        catch (error) {
+            res.status(500).json({ message: 'Erro ao deletar produto' });
+        }
+    }
+
+      //Faltaaaa Implementação dos Renders das Páginas WEB
+}
+
+export default produtoController;
