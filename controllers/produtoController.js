@@ -85,7 +85,55 @@ class produtoController{
         }
     }
 
-      //Faltaaaa Implementação dos Renders das Páginas WEB
+// Renderiza a página de cadastro de produto
+    static async renderCadastrarProduto(req, res){
+        try{
+            res.render('cadastrar-produto');
+        }
+        catch(error){
+            console.error('Erro ao carregar página de cadastro:', error);
+            res.status(500).send('Erro ao carregar página de cadastro');
+        }
+    }
+
+
+    // Renderiza a página com todos os produtos
+    static async renderProdutos(req, res){
+        try{
+            const produtos = await produto.findAll();
+
+            res.render('ver-produto', {
+                produtos
+            });
+        }
+        catch(error){
+            console.error('Erro ao carregar página de produtos:', error);
+            res.status(500).send('Erro ao carregar página de produtos');
+        }
+    }
+
+
+    // Renderiza a página de um produto específico
+    static async renderProduto(req, res){
+        try{
+            const { id } = req.params;
+
+            const produtoExistente = await produto.findById(id);
+
+            if(!produtoExistente){
+                return res.status(404).send('Produto não encontrado');
+            }
+
+            res.render('produto', {
+                produto: produtoExistente
+            });
+        }
+        catch(error){
+            console.error('Erro ao carregar página do produto:', error);
+            res.status(500).send('Erro ao carregar página do produto');
+        }
+    }
+ 
 }
 
 export default produtoController;
