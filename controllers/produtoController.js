@@ -5,14 +5,14 @@ class produtoController{
         try{
             const foto = req.file ? req.file.filename : null;
             const {nome, quantidade, valor, descricao, fabricante} = req.body;
-
-            const novoProduto = new produto({
-                nome, 
+            const novoProduto = new produto(
+                nome,
                 fabricante,
                 quantidade,
                 foto,
                 valor,
-                descricao });
+                descricao
+            );
             await novoProduto.save();
             res.status(201).json(novoProduto);
         }

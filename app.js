@@ -1,7 +1,12 @@
 import express from 'express';
 import router from './routes/routes.js';
+import Database from './config/db.js';
+
+
+await Database.connect();
 
 const app = express();
+
 
 app.use(express.json());
 

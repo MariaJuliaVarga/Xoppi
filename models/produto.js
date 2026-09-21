@@ -10,7 +10,7 @@ class produto{
     }
 
     async save(){
-        const novoProduto = new produto({
+        const novoProduto = new produtoSchema({
             nome: this.nome,
             fabricante: this.fabricante,
             quantidade: this.quantidade,
@@ -23,19 +23,19 @@ class produto{
     }
 
     static async findAll(){
-        return await produtoSchema.find();
+        return await novoProduto.find();
     }
 
     static async findById(id){
-        return await produtoSchema.findById(id);
+        return await novoProduto.findById(id);
     }
 
     static async delete(id){
-        return await produtoSchema.findByIdAndDelete(id);
+        return await novoProduto.findByIdAndDelete(id);
     }
 
     static async updateProduto(id, produtoAtualizado){
-        return await produtoSchema.findByIdAndUpdate(id, produtoAtualizado, {new: true});
+        return await novoProduto.findByIdAndUpdate(id, produtoAtualizado, {new: true});
     }
 }
 
