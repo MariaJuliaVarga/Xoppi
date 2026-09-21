@@ -33,7 +33,7 @@ class produtoController{
         }
     }
 
-    static async getProduroById(req, res){
+    static async getProdutoById(req, res){
         try{
             const {id} = req.params;
             const produtoExistente = await produto.findById(id);
