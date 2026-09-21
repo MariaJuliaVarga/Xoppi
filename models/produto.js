@@ -1,4 +1,4 @@
-import produto from "./produtoSchema";
+import produtoSchema from "./produtoSchema.js";
 class produto{
     constructor(nome, fabricante, quantidade, foto, valor, descricao){
         this.nome = nome;
@@ -23,19 +23,19 @@ class produto{
     }
 
     static async findAll(){
-        return await produto.find();
+        return await produtoSchema.find();
     }
 
     static async findById(id){
-        return await produto.findById(id);
+        return await produtoSchema.findById(id);
     }
 
     static async delete(id){
-        return await produto.findByIdAndDelete(id);
+        return await produtoSchema.findByIdAndDelete(id);
     }
 
     static async updateProduto(id, produtoAtualizado){
-        return await produto.findByIdAndUpdate(id, produtoAtualizado, {new: true});
+        return await produtoSchema.findByIdAndUpdate(id, produtoAtualizado, {new: true});
     }
 }
 

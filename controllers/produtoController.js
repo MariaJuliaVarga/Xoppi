@@ -1,4 +1,4 @@
-import produto from "../models/produto";
+import produto from "../models/produto.js";
 
 class produtoController{
     static async createProduto(req, res){
@@ -18,7 +18,7 @@ class produtoController{
         }
         catch(error){
             console.error('Erro ao cadastrar produto:', error);
-            res.status(500).send('Erro interno');
+            res.status(500).send(error);
         }
     }
 

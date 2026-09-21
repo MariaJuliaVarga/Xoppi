@@ -1,6 +1,6 @@
-import produtoController from "../controllers/produtoController";
-import upload from "../config/multer.js";
 import express from 'express';
+import produtoController from "../controllers/produtoController.js";
+import upload from "../config/multer.js";
 
 const router = express.Router();
 
