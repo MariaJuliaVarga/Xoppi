@@ -10,7 +10,8 @@ const funcionarioSchema = new mongoose.Schema(
         funcao : {type: String, required: true},
         salario : {type: Number, required: true},
         email : {type: String, required: true},
-        senha : {type: String, required: true}
+        senha : {type: String, required: true},
+        foto : {type: String, required: true}
     },
     {
         timestamps: true,

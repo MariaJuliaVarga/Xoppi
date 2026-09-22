@@ -1,29 +1,31 @@
 import funcionarioSchema from "./funcionarioSchema.js";
 class funcionario{
-    constructor(nome, sobrenome, cpf, nascimento, telefone, funcao, salario, email){
+    constructor(nome, sobrenome, cpf, nascimento, telefone, funcao, salario, email, senha, foto){
         this.nome = nome;
         this.sobrenome = sobrenome;
         this.cpf = cpf;
         this.nascimento = nascimento;
-        this.valor = valor;
         this.telefone = telefone;
         this.funcao = funcao;
         this.salario = salario;
         this.email = email;
+        this.senha = senha;
+        this.foto = foto;
     }
 
     async save(){
-        const novoFuncionario = new funcionarioSchema(
-        nome,
-        sobrenome,
-        cpf,
-        nascimento,
-        valor,
-        telefone,
-        funcao,
-        salario,
-        email
-        );
+        const novoFuncionario = new funcionarioSchema({
+        nome: this.nome,
+        sobrenome: this.sobrenome,
+        cpf: this.cpf,
+        nascimento: this.nascimento,
+        telefone: this.telefone,
+        funcao: this.funcao,
+        salario: this.salario,
+        email: this.email,
+        senha: this.senha,
+        foto: this.foto
+        });
 
         return await novoFuncionario.save();
     }

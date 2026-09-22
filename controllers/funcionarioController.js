@@ -1,10 +1,10 @@
 import funcionario from "../models/funcionario.js";
 
 class funcionarioController{
-    static async createfuncionario(req, res){
+    static async createFuncionario(req, res){
         try{
             const {nome, sobrenome, cpf, nascimento, telefone, funcao, salario, email, senha } = req.body;
-
+            const foto = req.file ? req.file.filename : null;
             const novoFuncionario = new funcionario(
                 nome, 
                 sobrenome,
@@ -14,7 +14,8 @@ class funcionarioController{
                 funcao,
                 salario,
                 email,
-                senha );
+                senha,
+                foto );
             await novoFuncionario.save();
             res.status(201).json(novoFuncionario);
         }

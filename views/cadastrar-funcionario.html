@@ -34,19 +34,19 @@
 
     <section class="conteudo-cadastro">
         <section class="conteudo-formulario-cadastro">
-            <form method="POST" action="http://localhost:3000/funcionario">
+            <form method="POST" action="http://localhost:3000/funcionario" enctype="multipart/form-data">
                 <label>Cadastrar Funcionário</label>
-                <input type="text" placeholder="Nome" name="inputNomeFunc">
-                <input type="text" placeholder="Sobrenome" name="inputSobrenomeFunc">
-                <input type="text" placeholder="CPF" name="inputCPFFunc">
-                <input type="date" placeholder="Data Nascimento" name="inputDataNascFunc">
-                <input type="text" placeholder="Telefone" name="inputTelefoneFunc">
-                <input type="text" placeholder="Cargo / Função" name="inputCargoFunc">
-                <input type="text" placeholder="Salário" name="inputSalarioFunc">
-                <input type="text" placeholder="Email" name="inputEmailFunc">
-                <input type="password" placeholder="Senha" name="inputSenha">
+                <input type="text" placeholder="Nome" name="nome">
+                <input type="text" placeholder="Sobrenome" name="sobrenome">
+                <input type="text" placeholder="CPF" name="cpf">
+                <input type="date" placeholder="Data Nascimento" name="nascimento">
+                <input type="text" placeholder="Telefone" name="telefone">
+                <input type="text" placeholder="Cargo / Função" name="funcao">
+                <input type="text" placeholder="Salário" name="salario">
+                <input type="text" placeholder="Email" name="email">
+                <input type="password" placeholder="Senha" name="senha">
                 <label id="lbl-arquivo" for="files">Selecionar foto de perfil:</label>
-                <input type="file" name="inputFoto">
+                <input type="file" name="foto">
                 <input id="botao" type="submit" value="Cadastrar">
             </form>
         </section>
