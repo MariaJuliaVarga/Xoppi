@@ -42,6 +42,10 @@ class cliente{
     static async updateCliente(id, clienteAtualizado){
         return await cliente.findByIdAndUpdate(id, clienteAtualizado, {new: true});
     }
+
+    static async findByEmail(email){
+        return await clienteSchema.findOne({ email });
+    }
 }
 
 export default cliente;

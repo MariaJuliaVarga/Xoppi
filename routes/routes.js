@@ -5,6 +5,7 @@ import clienteController from '../controllers/clienteController.js';
 import funcionarioController from '../controllers/funcionarioController.js';
 
 import upload from "../config/multer.js";
+import autenticarToken from '../middlewares/authMiddleware.js';
 
 const router = express.Router();
 
@@ -24,13 +25,17 @@ router.get('/fornecedor/cadastrar', fornecedorController.renderCadastrarForneced
 router.get('/fornecedores', fornecedorController.renderFornecedores);
 router.get('/fornecedor/:id', fornecedorController.renderFornecedor);
 
+// Rotas de login
+router.post('/cliente/login', upload.none(), clienteController.loginCliente);
+router.get('/login', clienteController.renderLogin);
+
 router.post("/cliente", upload.single("foto"), clienteController.createCliente);
 router.get('/cliente', clienteController.getAllCliente);
-router.put('/cliente/:id', clienteController.updateCliente);
-router.delete('/cliente/:id', clienteController.deletarCliente);
+router.put('/cliente/:id', autenticarToken, clienteController.updateCliente);
+router.delete('/cliente/:id', autenticarToken, clienteController.deletarCliente);
 router.get('/cliente/cadastrar', clienteController.renderCadastrarCliente);
-router.get('/cliente', clienteController.renderClientes);
-router.get('/cliente/:id', clienteController.renderCliente);
+router.get('/clientes', clienteController.renderClientes); // Rota /clientes ajustada para não conflitar
+router.get('/cliente/:id', autenticarToken, clienteController.renderCliente);
 
 router.post("/funcionario", upload.single("foto"), funcionarioController.createFuncionario);
 router.put('/funcionario/:id',upload.single('foto'), funcionarioController.updateFuncionario);

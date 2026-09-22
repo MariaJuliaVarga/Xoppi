@@ -2,15 +2,15 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
-    <link rel="icon" href="/img/logo.png" type="image/png">
+    <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
+    <link rel="icon" href="../assets/img/logo.png" type="image/png">
     <title>Xhopii - Login</title>
 </head>
 <body>
     
     <header class="cabecalho-login">
         <section id="cabecalho-login-logo">
-            <img src="/img/logo.png">
+            <img src="../assets/img/logo.png">
             <h1>Xhopii</h1>
             <p>Entre</p>
         </section>
@@ -21,27 +21,25 @@
 
     <section class="conteudo-login">
         <section class="conteudo-login-info">
-            <form class="form-login" method="POST" action="/clientes">
+            <form class="form-login" id="formLogin">
                 <label id="label-log">Login</label>
-                <input id="input-log" type="text" placeholder="Email" name="email">
-                <input id="input-log" type="password" placeholder="Senha" name="senha">
+                <input id="input-log" type="email" placeholder="Email" name="email" required>
+                <input id="input-log" type="password" placeholder="Senha" name="senha" required>
                 <input id="botao-log" type="submit" value="ENTRE">
             </form>
-            <section class="conteudo-login-recuperacao">
-                <a href="recuperar-senha">Esqueci minha senha</a>
-                <a href="#">Fazer login com SMS</a>
-            </section>
+            <div id="mensagem-erro" style="color: red; margin-top: 10px; display: none;"></div>
+
             <section class="conteudo-login-alegoria">
                 <hr>
                 <p>Ou</p>
                 <hr>
             </section>
             <section class="conteudo-login-sociais">
-                <button><img src="/img/logo-facebook-cicle.png">Facebook</button>
-                <button><img src="/img/logo-google.png">Google</button>
-                <button><img src="/img/logo-apple.png">Apple</button>
+                <button><img src="../assets/img/logo-facebook-cicle.png">Facebook</button>
+                <button><img src="../assets/img/logo-google.png">Google</button>
+                <button><img src="../assets/img/logo-apple.png">Apple</button>
             </section>
-            <p>Novo na Xhopii? <a href="/clientes/cadastrar">Cadastrar</a></p>
+            <p>Novo na Xhopii? <a href="./cadastrar-cliente.html">Cadastrar</a></p>
         </section>
     </section>
 
@@ -72,33 +70,64 @@
             <section class="conteudo-rodape">
                 <h5 id="rodape-titulo">Pagamento</h5>
                 <section class="conteudo-rodape-pagamento">
-                    <img id="img-pagamento" src="/img/logo-visa.png">
-                    <img id="img-pagamento" src="/img/logo-mastercard.png">
-                    <img id="img-pagamento" src="/img/logo-hipercard.png">
-                    <img id="img-pagamento" src="/img/logo-elo.png">
-                    <img id="img-pagamento" src="/img/logo-american-express.png">
-                    <img id="img-pagamento" src="/img/logo-boleto.png">
-                    <img id="img-pagamento" src="/img/logo-pix.png">
+                    <img id="img-pagamento" src="../assets/img/logo-visa.png">
+                    <img id="img-pagamento" src="../assets/img/logo-mastercard.png">
+                    <img id="img-pagamento" src="../assets/img/logo-hipercard.png">
+                    <img id="img-pagamento" src="../assets/img/logo-elo.png">
+                    <img id="img-pagamento" src="../assets/img/logo-american-express.png">
+                    <img id="img-pagamento" src="../assets/img/logo-boleto.png">
+                    <img id="img-pagamento" src="../assets/img/logo-pix.png">
                 </section>               
             </section>
             <section class="conteudo-rodape">
                 <h5 id="rodape-titulo">Siga-nos</h5>
-                <a href="#"><img id="img-sociais" src="/img/logo-instagram.png">Instagram</a>
-                <a href="#"><img id="img-sociais" src="/img/logo-tiktok.png">Tik Tok</a>
-                <a href="#"><img id="img-sociais" src="/img/logo-twitter.png">X/Twitter</a>
-                <a href="#"><img id="img-sociais" src="/img/logo-facebook.png">Facebook</a>
-                <a href="#"><img id="img-sociais" src="/img/logo-linkedln.png">Linkedln</a>
+                <a href="#"><img id="img-sociais" src="../assets/img/logo-instagram.png">Instagram</a>
+                <a href="#"><img id="img-sociais" src="../assets/img/logo-tiktok.png">Tik Tok</a>
+                <a href="#"><img id="img-sociais" src="../assets/img/logo-twitter.png">X/Twitter</a>
+                <a href="#"><img id="img-sociais" src="../assets/img/logo-facebook.png">Facebook</a>
+                <a href="#"><img id="img-sociais" src="../assets/img/logo-linkedln.png">Linkedln</a>
             </section>
             <section class="conteudo-rodape">
                 <h5 id="rodape-titulo">Atendimento ao cliente</h5>
-                <img id="img-store" src="/img/qr-code.png">
-                <img id="img-store" src="/img/logo-store-apple.png">
-                <img id="img-store" src="/img/logo-google-play.png">
+                <img id="img-store" src="../assets/img/qr-code.png">
+                <img id="img-store" src="../assets/img/logo-store-apple.png">
+                <img id="img-store" src="../assets/img/logo-google-play.png">
             </section>
         </section>
         <hr>
         <p>© 2025 Xhopii. Todos os direitos acadêmicos reservados</p>
     </footer>
 
+    <script>
+        document.getElementById('formLogin').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = e.target.email.value;
+            const senha = e.target.senha.value;
+            const msgErro = document.getElementById('mensagem-erro');
+            msgErro.style.display = 'none';
+
+            try {
+                const response = await fetch('http://localhost:3000/cliente/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, senha })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    localStorage.setItem('token', data.token);
+                    window.location.href = './home.html'; // Redireciona para visualização
+                } else {
+                    msgErro.textContent = data.message || 'Erro ao realizar login';
+                    msgErro.style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Erro no login:', error);
+                msgErro.textContent = 'Erro de conexão com o servidor';
+                msgErro.style.display = 'block';
+            }
+        });
+    </script>
 </body>
 </html>

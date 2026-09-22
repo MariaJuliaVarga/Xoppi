@@ -1,10 +1,19 @@
 import cliente from "../models/cliente.js";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 class clienteController{
     static async createCliente(req, res){
         try{
             const {nome, sobrenome, cpf, nascimento, telefone, email, senha } = req.body;
             const foto = req.file ? req.file.filename : null;
+            
+            const salt = await bcrypt.genSalt(10);
+            const senhaHash = await bcrypt.hash(senha, salt);
+
             const novoCliente = new cliente(
                 nome, 
                 sobrenome,
@@ -12,7 +21,7 @@ class clienteController{
                 nascimento,
                 telefone,
                 email,
-                senha, 
+                senhaHash, 
                 foto
             );
             await novoCliente.save();
@@ -21,6 +30,58 @@ class clienteController{
         catch(error){
             console.error('Erro ao cadastrar cliente:', error);
             res.status(500).send(error);
+        }
+    }
+
+    static async loginCliente(req, res) {
+        try {
+            console.log('Headers da requisição de login:', req.headers);
+            console.log('Body da requisição de login:', req.body);
+            
+            const { email, senha } = req.body || {};
+            
+            if (!email || !senha) {
+                return res.status(400).json({ message: 'Email e senha são obrigatórios' });
+            }
+            
+            const clienteExistente = await cliente.findByEmail(email);
+            if (!clienteExistente) {
+                return res.status(401).json({ message: 'Email inválido' });
+            }
+
+            const senhaValida = await bcrypt.compare(senha, clienteExistente.senha);
+            if (!senhaValida) {
+                return res.status(401).json({ message: 'Senha inválida' });
+            }
+
+            const token = jwt.sign(
+                { id: clienteExistente._id, email: clienteExistente.email },
+                process.env.JWT_SECRET,
+                { expiresIn: '24h' }
+            );
+
+            res.status(200).json({ 
+                message: 'Login realizado com sucesso',
+                token, 
+                cliente: { 
+                    id: clienteExistente._id, 
+                    nome: clienteExistente.nome, 
+                    email: clienteExistente.email 
+                } 
+            });
+        } catch (error) {
+            console.error('Erro no login do cliente:', error);
+            res.status(500).json({ message: 'Erro interno ao realizar login' });
+        }
+    }
+
+    static async renderLogin(req, res) {
+        try {
+            // Usa o path.resolve para enviar o arquivo HTML estático (como é .html e não .ejs, não usa render)
+            res.sendFile('login.html', { root: './views' });
+        } catch (error) {
+            console.error('Erro ao carregar página de login:', error);
+            res.status(500).send('Erro ao carregar página de login');
         }
     }
 
