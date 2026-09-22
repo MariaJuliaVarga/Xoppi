@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="icon" href="/img/logo.png" type="image/png">
+    <title>Xhopii - Editar Produto</title>
+</head>
+<body>
+
+    <header>
+        <section id="cabecalho-logo">
+            <img src="/img/logo.png">
+            <h1>Xhopii</h1>
+        </section>
+        <section id="cabecalho-logout">
+            <a href="/login">Sair</a>
+        </section>
+    </header>
+
+        <nav class="menu-horizontal">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/cliente/cadastrar">Cadastro Cliente</a></li>
+            <li><a href="/funcionario/cadastrar">Cadastro Funcionário</a></li>
+            <li><a href="/produto/cadastrar">Cadastro Produto</a></li>
+            <li><a href="/fornecedor/cadastrar">Cadastro Fornecedor</a></li>
+            <li><a href="/recursos">Ver Recursos</a></li>
+        </ul>
+    </nav>
+
+    <section class="conteudo-cadastro">
+        <section class="conteudo-formulario-cadastro">
+            <form id="form-editar-produto">
+                <label>Editar Produto</label>
+                <input type="hidden" id="produtoId" value="<%= produto._id %>">
+                <input type="text" placeholder="Nome" id="nome" value="<%= produto.nome %>">
+                <input type="text" placeholder="Fabricante" id="fabricante" value="<%= produto.fabricante %>">
+                <input type="number" placeholder="Quantidade" id="quantidade" value="<%= produto.quantidade %>">
+                <input type="number" step="0.01" placeholder="Valor" id="valor" value="<%= produto.valor %>">
+                <input type="text" placeholder="Descrição" id="descricao" value="<%= produto.descricao %>">
+                
+                <input id="botao" type="button" value="Salvar Alterações" onclick="salvarProduto()">
+                <input id="botao" type="button" value="Excluir Produto" style="background-color: #d9534f; margin-top: 10px;" onclick="excluirProduto()">
+            </form>
+        </section>
+    </section>
+
+    <script>
+        const id = document.getElementById('produtoId').value;
+
+        async function salvarProduto() {
+            const dados = {
+                nome: document.getElementById('nome').value,
+                fabricante: document.getElementById('fabricante').value,
+                quantidade: document.getElementById('quantidade').value,
+                valor: document.getElementById('valor').value,
+                descricao: document.getElementById('descricao').value
+            };
+
+            try {
+                const response = await fetch(`/produto/${id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(dados)
+                });
+                if (response.ok) {
+                    alert('Produto atualizado com sucesso!');
+                    window.location.href = '/recursos';
+                } else {
+                    alert('Erro ao atualizar produto.');
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Erro ao atualizar produto.');
+            }
+        }
+
+        async function excluirProduto() {
+            if (confirm('Tem certeza que deseja excluir este produto?')) {
+                try {
+                    const response = await fetch(`/produto/${id}`, {
+                        method: 'DELETE'
+                    });
+                    if (response.ok || response.status === 204) {
+                        alert('Produto excluído com sucesso!');
+                        window.location.href = '/recursos';
+                    } else {
+                        alert('Erro ao excluir produto.');
+                    }
+                } catch (err) {
+                    console.error(err);
+                    alert('Erro ao excluir produto.');
+                }
+            }
+        }
+    </script>
+
+    <footer class="rodape">
+        <p>© 2025 Xhopii. Todos os direitos acadêmicos reservados</p>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="icon" href="/img/logo.png" type="image/png">
+    <title>Xhopii - Editar Fornecedor</title>
+</head>
+<body>
+
+    <header>
+        <section id="cabecalho-logo">
+            <img src="/img/logo.png">
+            <h1>Xhopii</h1>
+        </section>
+        <section id="cabecalho-logout">
+            <a href="/login">Sair</a>
+        </section>
+    </header>
+
+        <nav class="menu-horizontal">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/cliente/cadastrar">Cadastro Cliente</a></li>
+            <li><a href="/funcionario/cadastrar">Cadastro Funcionário</a></li>
+            <li><a href="/produto/cadastrar">Cadastro Produto</a></li>
+            <li><a href="/fornecedor/cadastrar">Cadastro Fornecedor</a></li>
+            <li><a href="/recursos">Ver Recursos</a></li>
+        </ul>
+    </nav>
+
+    <section class="conteudo-cadastro">
+        <section class="conteudo-formulario-cadastro">
+            <form id="form-editar-fornecedor">
+                <label>Editar Fornecedor</label>
+                <input type="hidden" id="fornecedorId" value="<%= fornecedor._id %>">
+                <input type="text" placeholder="Razão Social" id="razaoSocial" value="<%= fornecedor.razaoSocial %>">
+                <input type="text" placeholder="CNPJ" id="cnpj" value="<%= fornecedor.cnpj %>">
+                
+                <input id="botao" type="button" value="Salvar Alterações" onclick="salvarFornecedor()">
+                <input id="botao" type="button" value="Excluir Fornecedor" style="background-color: #d9534f; margin-top: 10px;" onclick="excluirFornecedor()">
+            </form>
+        </section>
+    </section>
+
+    <script>
+        const id = document.getElementById('fornecedorId').value;
+
+        async function salvarFornecedor() {
+            const dados = {
+                razaoSocial: document.getElementById('razaoSocial').value,
+                cnpj: document.getElementById('cnpj').value
+            };
+
+            try {
+                const response = await fetch(`/fornecedor/${id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(dados)
+                });
+                if (response.ok) {
+                    alert('Fornecedor atualizado com sucesso!');
+                    window.location.href = '/recursos';
+                } else {
+                    alert('Erro ao atualizar fornecedor.');
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Erro ao atualizar fornecedor.');
+            }
+        }
+
+        async function excluirFornecedor() {
+            if (confirm('Tem certeza que deseja excluir este fornecedor?')) {
+                try {
+                    const response = await fetch(`/fornecedor/${id}`, {
+                        method: 'DELETE'
+                    });
+                    if (response.ok || response.status === 204) {
+                        alert('Fornecedor excluído com sucesso!');
+                        window.location.href = '/recursos';
+                    } else {
+                        alert('Erro ao excluir fornecedor.');
+                    }
+                } catch (err) {
+                    console.error(err);
+                    alert('Erro ao excluir fornecedor.');
+                }
+            }
+        }
+    </script>
+
+    <footer class="rodape">
+        <p>© 2025 Xhopii. Todos os direitos acadêmicos reservados</p>
+    </footer>
+
+</body>
+</html>

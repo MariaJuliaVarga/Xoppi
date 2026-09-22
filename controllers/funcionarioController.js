@@ -69,6 +69,7 @@ class funcionarioController{
             senha
         }; 
             await funcionario.updateFuncionario(id, funcionarioAtualizado); 
+            res.status(200).json({ message: 'Funcionário atualizado com sucesso' });
         }
             catch (error){
             console.error('Erro ao carregar o funcionario:', error);
@@ -90,7 +91,7 @@ class funcionarioController{
     // Renderiza a página de cadastro de funcionario
 static async renderCadastrarFuncionario(req, res){
     try{
-        res.render('cadastrar-funcionario');
+        res.sendFile('cadastrar-funcionario.html', { root: './views' });
     }
     catch(error){
         console.error('Erro ao carregar página de cadastro de funcionario:', error);
@@ -103,7 +104,7 @@ static async renderFuncionarios(req, res){
     try{
         const funcionarios = await funcionario.findAll();
 
-        res.render('ver-funcionarios', {
+        res.render('visualizar-funcionario.html', {
             funcionarios
         });
     }

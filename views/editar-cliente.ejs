@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="icon" href="/img/logo.png" type="image/png">
+    <title>Xhopii - Editar Cliente</title>
+</head>
+<body>
+
+    <header>
+        <section id="cabecalho-logo">
+            <img src="/img/logo.png">
+            <h1>Xhopii</h1>
+        </section>
+        <section id="cabecalho-logout">
+            <a href="/login">Sair</a>
+        </section>
+    </header>
+
+        <nav class="menu-horizontal">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/cliente/cadastrar">Cadastro Cliente</a></li>
+            <li><a href="/funcionario/cadastrar">Cadastro Funcionário</a></li>
+            <li><a href="/produto/cadastrar">Cadastro Produto</a></li>
+            <li><a href="/fornecedor/cadastrar">Cadastro Fornecedor</a></li>
+            <li><a href="/recursos">Ver Recursos</a></li>
+        </ul>
+    </nav>
+
+    <section class="conteudo-cadastro">
+        <section class="conteudo-formulario-cadastro">
+            <form id="form-editar-cliente">
+                <label>Editar Cliente</label>
+                <input type="hidden" id="clienteId" value="<%= cliente._id %>">
+                <input type="text" placeholder="Nome" id="nome" value="<%= cliente.nome %>">
+                <input type="text" placeholder="Sobrenome" id="sobrenome" value="<%= cliente.sobrenome %>">
+                <input type="text" placeholder="CPF" id="cpf" value="<%= cliente.cpf %>">
+                <input type="text" placeholder="Telefone" id="telefone" value="<%= cliente.telefone %>">
+                <input type="text" placeholder="Email" id="email" value="<%= cliente.email %>">
+                
+                <input id="botao" type="button" value="Salvar Alterações" onclick="salvarCliente()">
+                <input id="botao" type="button" value="Excluir Cliente" style="background-color: #d9534f; margin-top: 10px;" onclick="excluirCliente()">
+            </form>
+        </section>
+    </section>
+
+    <script>
+        const id = document.getElementById('clienteId').value;
+
+        async function salvarCliente() {
+            const dados = {
+                nome: document.getElementById('nome').value,
+                sobrenome: document.getElementById('sobrenome').value,
+                cpf: document.getElementById('cpf').value,
+                telefone: document.getElementById('telefone').value,
+                email: document.getElementById('email').value
+            };
+
+            try {
+                const response = await fetch(`/cliente/${id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(dados)
+                });
+                if (response.ok) {
+                    alert('Cliente atualizado com sucesso!');
+                    window.location.href = '/recursos';
+                } else {
+                    alert('Erro ao atualizar cliente.');
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Erro ao atualizar cliente.');
+            }
+        }
+
+        async function excluirCliente() {
+            if (confirm('Tem certeza que deseja excluir este cliente?')) {
+                try {
+                    const response = await fetch(`/cliente/${id}`, {
+                        method: 'DELETE'
+                    });
+                    if (response.ok || response.status === 204) {
+                        alert('Cliente excluído com sucesso!');
+                        window.location.href = '/recursos';
+                    } else {
+                        alert('Erro ao excluir cliente.');
+                    }
+                } catch (err) {
+                    console.error(err);
+                    alert('Erro ao excluir cliente.');
+                }
+            }
+        }
+    </script>
+
+    <footer class="rodape">
+        <p>© 2025 Xhopii. Todos os direitos acadêmicos reservados</p>
+    </footer>
+
+</body>
+</html>

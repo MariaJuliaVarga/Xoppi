@@ -130,6 +130,7 @@ class clienteController{
             foto
         }; 
             await cliente.updateCliente(id, clienteAtualizado); 
+            res.status(200).json({ message: 'Cliente atualizado com sucesso' });
         }
             catch (error){
             console.error('Erro ao carregar o cliente:', error);
@@ -151,7 +152,7 @@ class clienteController{
     // Renderiza a página de cadastro de cliente
 static async renderCadastrarCliente(req, res){
     try{
-        res.render('cadastrar-cliente');
+        res.sendFile('cadastrar-cliente.html', { root: './views' });
     }
     catch(error){
         console.error('Erro ao carregar página de cadastro de cliente:', error);
@@ -164,7 +165,7 @@ static async renderClientes(req, res){
     try{
         const clientes = await cliente.findAll();
 
-        res.render('ver-clientes', {
+        res.render('visualizar-cliente', {
             clientes
         });
     }

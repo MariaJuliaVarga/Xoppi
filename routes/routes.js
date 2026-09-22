@@ -9,6 +9,10 @@ import autenticarToken from '../middlewares/authMiddleware.js';
 
 const router = express.Router();
 
+router.get('/', (req, res) => {
+    res.sendFile('home.html', { root: './views' });
+});
+
 router.post('/produto',upload.single('foto'),produtoController.createProduto);
 router.get('/produto', produtoController.getAllProdutos);
 router.put('/produto/:id',upload.single('foto'), produtoController.updateProduto);
@@ -33,12 +37,12 @@ router.get('/login', clienteController.renderLogin);
 
 router.post("/cliente", upload.single("foto"), clienteController.createCliente);
 router.get('/cliente', clienteController.getAllCliente);
-router.put('/cliente/:id', autenticarToken, clienteController.updateCliente);
-router.delete('/cliente/:id', autenticarToken, clienteController.deletarCliente);
+router.put('/cliente/:id', clienteController.updateCliente);
+router.delete('/cliente/:id', clienteController.deletarCliente);
 router.get('/cliente/cadastrar', clienteController.renderCadastrarCliente);
 router.get('/clientes', clienteController.renderClientes); // Rota /clientes ajustada para não conflitar
-router.get('/cliente/:id', autenticarToken, clienteController.renderCliente);
-router.get('/cliente/editar/:id', autenticarToken, clienteController.renderEditarCliente);
+router.get('/cliente/:id', clienteController.renderCliente);
+router.get('/cliente/editar/:id', clienteController.renderEditarCliente);
 
 router.post("/funcionario", upload.single("foto"), funcionarioController.createFuncionario);
 router.put('/funcionario/:id',upload.single('foto'), funcionarioController.updateFuncionario);
@@ -49,5 +53,23 @@ router.get('/funcionario/cadastrar', funcionarioController.renderCadastrarFuncio
 router.get('/funcionario', funcionarioController.renderFuncionarios);
 router.get('/funcionario/:id', funcionarioController.renderFuncionario);
 router.get('/funcionario/editar/:id', funcionarioController.renderEditarFuncionario);
+
+import cliente from '../models/cliente.js';
+import funcionario from '../models/funcionario.js';
+import produto from '../models/produto.js';
+import fornecedor from '../models/fornecedor.js';
+
+router.get('/recursos', async (req, res) => {
+    try {
+        const clientes = await cliente.findAll();
+        const funcionarios = await funcionario.findAll();
+        const produtos = await produto.findAll();
+        const fornecedores = await fornecedor.findAll();
+        res.render('visualizar-recursos', { clientes, funcionarios, produtos, fornecedores });
+    } catch (error) {
+        console.error('Erro ao carregar recursos:', error);
+        res.status(500).send('Erro ao carregar recursos');
+    }
+});
 
 export default router;

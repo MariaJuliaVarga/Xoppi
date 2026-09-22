@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="icon" href="/img/logo.png" type="image/png">
+    <title>Xhopii - Editar Funcionário</title>
+</head>
+<body>
+
+    <header>
+        <section id="cabecalho-logo">
+            <img src="/img/logo.png">
+            <h1>Xhopii</h1>
+        </section>
+        <section id="cabecalho-logout">
+            <a href="/login">Sair</a>
+        </section>
+    </header>
+
+        <nav class="menu-horizontal">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/cliente/cadastrar">Cadastro Cliente</a></li>
+            <li><a href="/funcionario/cadastrar">Cadastro Funcionário</a></li>
+            <li><a href="/produto/cadastrar">Cadastro Produto</a></li>
+            <li><a href="/fornecedor/cadastrar">Cadastro Fornecedor</a></li>
+            <li><a href="/recursos">Ver Recursos</a></li>
+        </ul>
+    </nav>
+
+    <section class="conteudo-cadastro">
+        <section class="conteudo-formulario-cadastro">
+            <form id="form-editar-funcionario">
+                <label>Editar Funcionário</label>
+                <input type="hidden" id="funcionarioId" value="<%= funcionario._id %>">
+                <input type="text" placeholder="Nome" id="nome" value="<%= funcionario.nome %>">
+                <input type="text" placeholder="Sobrenome" id="sobrenome" value="<%= funcionario.sobrenome %>">
+                <input type="text" placeholder="CPF" id="cpf" value="<%= funcionario.cpf %>">
+                <input type="text" placeholder="Função" id="funcao" value="<%= funcionario.funcao %>">
+                <input type="number" placeholder="Salário" id="salario" value="<%= funcionario.salario %>">
+                <input type="text" placeholder="Telefone" id="telefone" value="<%= funcionario.telefone %>">
+                <input type="text" placeholder="Email" id="email" value="<%= funcionario.email %>">
+                
+                <input id="botao" type="button" value="Salvar Alterações" onclick="salvarFuncionario()">
+                <input id="botao" type="button" value="Excluir Funcionário" style="background-color: #d9534f; margin-top: 10px;" onclick="excluirFuncionario()">
+            </form>
+        </section>
+    </section>
+
+    <script>
+        const id = document.getElementById('funcionarioId').value;
+
+        async function salvarFuncionario() {
+            const dados = {
+                nome: document.getElementById('nome').value,
+                sobrenome: document.getElementById('sobrenome').value,
+                cpf: document.getElementById('cpf').value,
+                funcao: document.getElementById('funcao').value,
+                salario: document.getElementById('salario').value,
+                telefone: document.getElementById('telefone').value,
+                email: document.getElementById('email').value
+            };
+
+            try {
+                const response = await fetch(`/funcionario/${id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(dados)
+                });
+                if (response.ok) {
+                    alert('Funcionário atualizado com sucesso!');
+                    window.location.href = '/recursos';
+                } else {
+                    alert('Erro ao atualizar funcionário.');
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Erro ao atualizar funcionário.');
+            }
+        }
+
+        async function excluirFuncionario() {
+            if (confirm('Tem certeza que deseja excluir este funcionário?')) {
+                try {
+                    const response = await fetch(`/funcionario/${id}`, {
+                        method: 'DELETE'
+                    });
+                    if (response.ok || response.status === 204) {
+                        alert('Funcionário excluído com sucesso!');
+                        window.location.href = '/recursos';
+                    } else {
+                        alert('Erro ao excluir funcionário.');
+                    }
+                } catch (err) {
+                    console.error(err);
+                    alert('Erro ao excluir funcionário.');
+                }
+            }
+        }
+    </script>
+
+    <footer class="rodape">
+        <p>© 2025 Xhopii. Todos os direitos acadêmicos reservados</p>
+    </footer>
+
+</body>
+</html>

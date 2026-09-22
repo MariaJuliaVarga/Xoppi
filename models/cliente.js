@@ -28,19 +28,19 @@ class cliente{
     }
 
     static async findAll(){
-        return await cliente.find();
+        return await clienteSchema.find();
     }
 
     static async findById(id){
-        return await cliente.findById(id);
+        return await clienteSchema.findById(id);
     }
 
     static async delete(id){
-        return await cliente.findByIdAndDelete(id);
+        return await clienteSchema.findByIdAndDelete(id);
     }
 
     static async updateCliente(id, clienteAtualizado){
-        return await cliente.findByIdAndUpdate(id, clienteAtualizado, {new: true});
+        return await clienteSchema.findByIdAndUpdate(id, clienteAtualizado, {new: true});
     }
 
     static async findByEmail(email){

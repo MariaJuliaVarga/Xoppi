@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
+    <link rel="icon" href="../assets/img/logo.png" type="image/png">
+    <title>Xhopii - Ver Recursos</title>
+</head>
+<body>
+
+    <header>
+        <section id="cabecalho-logo">
+            <img src="../assets/img/logo.png">
+            <h1>Xhopii</h1>
+        </section>
+        <section id="cabecalho-logout">
+            <a href="login.html">Sair</a>
+        </section>
+    </header>
+
+        <nav class="menu-horizontal">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/cliente/cadastrar">Cadastro Cliente</a></li>
+            <li><a href="/funcionario/cadastrar">Cadastro Funcionário</a></li>
+            <li><a href="/produto/cadastrar">Cadastro Produto</a></li>
+            <li><a href="/fornecedor/cadastrar">Cadastro Fornecedor</a></li>
+            <li><a href="/recursos">Ver Recursos</a></li>
+        </ul>
+    </nav>
+
+    <section class="conteudo-visualizar">
+        <section class="conteudo-visualizar-box">
+            <h1>Recursos do Sistema</h1>
+
+            <h2>Clientes</h2>
+            <% if (clientes && clientes.length > 0) { %>
+                <% clientes.forEach(cliente => { %>
+                    <section class="conteudo-bloco">
+                        <h3><%= cliente.nome %> <%= cliente.sobrenome %></h3>
+                        <p>CPF: <%= cliente.cpf %></p>
+                        <p>Telefone: <%= cliente.telefone %></p>
+                        <p>E-mail: <%= cliente.email %></p>
+                        <a href="/cliente/editar/<%= cliente._id %>" style="display:inline-block; margin-top:10px; padding:5px 10px; background-color:#ff6600; color:#fff; text-decoration:none; border-radius:3px;">Editar / Excluir</a>
+                    </section>
+                <% }); %>
+            <% } else { %>
+                <p>Nenhum cliente cadastrado.</p>
+            <% } %>
+
+            <h2>Funcionários</h2>
+            <% if (funcionarios && funcionarios.length > 0) { %>
+                <% funcionarios.forEach(func => { %>
+                    <section class="conteudo-bloco">
+                        <h3><%= func.nome %> <%= func.sobrenome %></h3>
+                        <p>CPF: <%= func.cpf %></p>
+                        <p>Função: <%= func.funcao %></p>
+                        <p>Salário: <%= func.salario %></p>
+                        <p>Telefone: <%= func.telefone %></p>
+                        <p>E-mail: <%= func.email %></p>
+                        <a href="/funcionario/editar/<%= func._id %>" style="display:inline-block; margin-top:10px; padding:5px 10px; background-color:#ff6600; color:#fff; text-decoration:none; border-radius:3px;">Editar / Excluir</a>
+                    </section>
+                <% }); %>
+            <% } else { %>
+                <p>Nenhum funcionário cadastrado.</p>
+            <% } %>
+
+            <h2>Produtos</h2>
+            <% if (produtos && produtos.length > 0) { %>
+                <% produtos.forEach(prod => { %>
+                    <section class="conteudo-bloco">
+                        <h3><%= prod.nome %></h3>
+                        <p>Fabricante: <%= prod.fabricante %></p>
+                        <p>Quantidade: <%= prod.quantidade %></p>
+                        <p>Valor: R$ <%= prod.valor %></p>
+                        <p>Descrição: <%= prod.descricao %></p>
+                        <a href="/produto/editar/<%= prod._id %>" style="display:inline-block; margin-top:10px; padding:5px 10px; background-color:#ff6600; color:#fff; text-decoration:none; border-radius:3px;">Editar / Excluir</a>
+                    </section>
+                <% }); %>
+            <% } else { %>
+                <p>Nenhum produto cadastrado.</p>
+            <% } %>
+
+            <h2>Fornecedores</h2>
+            <% if (fornecedores && fornecedores.length > 0) { %>
+                <% fornecedores.forEach(forn => { %>
+                    <section class="conteudo-bloco">
+                        <h3><%= forn.razaoSocial %></h3>
+                        <p>CNPJ: <%= forn.cnpj %></p>
+                        <a href="/fornecedor/editar/<%= forn._id %>" style="display:inline-block; margin-top:10px; padding:5px 10px; background-color:#ff6600; color:#fff; text-decoration:none; border-radius:3px;">Editar / Excluir</a>
+                    </section>
+                <% }); %>
+            <% } else { %>
+                <p>Nenhum fornecedor cadastrado.</p>
+            <% } %>
+
+        </section>
+    </section>
+
+    <footer class="rodape">
+        <p>© 2025 Xhopii. Todos os direitos acadêmicos reservados</p>
+    </footer>
+
+</body>
+</html>

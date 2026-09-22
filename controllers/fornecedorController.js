@@ -56,6 +56,7 @@ class fornecedorController{
             cnpj
         }; 
             await fornecedor.updateFornecedor(id, fornecedorAtualizado); 
+            res.status(200).json({ message: 'Fornecedor atualizado com sucesso' });
         }
             catch (error){
             console.error('Erro ao carregar o fornecedor:', error);
@@ -77,7 +78,7 @@ class fornecedorController{
         // Renderiza a página de cadastro de fornecedor
     static async renderCadastrarFornecedor(req, res){
         try{
-            res.render('cadastrar-fornecedor');
+            res.sendFile('cadastrar-fornecedor.html', { root: './views' });
         }
         catch(error){
             console.error('Erro ao carregar página de cadastro de fornecedor:', error);

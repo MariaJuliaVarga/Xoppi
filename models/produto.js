@@ -23,19 +23,19 @@ class produto{
     }
 
     static async findAll(){
-        return await novoProduto.find();
+        return await produtoSchema.find();
     }
 
     static async findById(id){
-        return await novoProduto.findById(id);
+        return await produtoSchema.findById(id);
     }
 
     static async delete(id){
-        return await novoProduto.findByIdAndDelete(id);
+        return await produtoSchema.findByIdAndDelete(id);
     }
 
     static async updateProduto(id, produtoAtualizado){
-        return await novoProduto.findByIdAndUpdate(id, produtoAtualizado, {new: true});
+        return await produtoSchema.findByIdAndUpdate(id, produtoAtualizado, {new: true});
     }
 }
 

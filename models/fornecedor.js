@@ -17,19 +17,19 @@ class fornecedor{
     }
 
     static async findAll(){
-        return await novoFornecedor.find();
+        return await fornecedorSchema.find();
     }
 
     static async findById(id){
-        return await novoFornecedor.findById(id);
+        return await fornecedorSchema.findById(id);
     }
 
     static async delete(id){
-        return await novoFornecedor.findByIdAndDelete(id);
+        return await fornecedorSchema.findByIdAndDelete(id);
     }
 
     static async updateFornecedor(id, fornecedorAtualizado){
-        return await novoFornecedor.findByIdAndUpdate(id, fornecedorAtualizado, {new: true});
+        return await fornecedorSchema.findByIdAndUpdate(id, fornecedorAtualizado, {new: true});
     }
 }
 

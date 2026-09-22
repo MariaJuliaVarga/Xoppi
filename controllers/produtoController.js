@@ -67,6 +67,7 @@ class produtoController{
             produtoAtualizado.foto = foto;
             }
             await produto.updateProduto(id, produtoAtualizado); 
+            res.status(200).json({ message: 'Produto atualizado com sucesso' });
         }
             catch (error){
             console.error('Erro ao carregar o produto:', error);
@@ -88,7 +89,7 @@ class produtoController{
 // Renderiza a página de cadastro de produto
     static async renderCadastrarProduto(req, res){
         try{
-            res.render('cadastrar-produto');
+            res.sendFile('cadastrar-produto.html', { root: './views' });
         }
         catch(error){
             console.error('Erro ao carregar página de cadastro:', error);
@@ -102,7 +103,7 @@ class produtoController{
         try{
             const produtos = await produto.findAll();
 
-            res.render('ver-produto', {
+            res.render('ver-produto.html', {
                 produtos
             });
         }

@@ -31,19 +31,19 @@ class funcionario{
     }
 
     static async findAll(){
-        return await funcionario.find();
+        return await funcionarioSchema.find();
     }
 
     static async findById(id){
-        return await funcionario.findById(id);
+        return await funcionarioSchema.findById(id);
     }
 
     static async delete(id){
-        return await funcionario.findByIdAndDelete(id);
+        return await funcionarioSchema.findByIdAndDelete(id);
     }
 
     static async updateFuncionario(id, funcionarioAtualizado){
-        return await funcionario.findByIdAndUpdate(id, funcionarioAtualizado, {new: true});
+        return await funcionarioSchema.findByIdAndUpdate(id, funcionarioAtualizado, {new: true});
     }
 }
 
