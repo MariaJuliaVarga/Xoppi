@@ -1,28 +1,27 @@
-import produto from "./produtoSchema";
-class produto{
-    constructor(nome, sobrenome, cpf, nascimento, telefone, funcao, salario, email){
+import clienteSchema from "./clienteSchema.js";
+class cliente{
+    constructor(nome, sobrenome, cpf, nascimento, telefone, email, senha){
         this.nome = nome;
         this.sobrenome = sobrenome;
         this.cpf = cpf;
         this.nascimento = nascimento;
         this.valor = valor;
         this.telefone = telefone;
-        this.funcao = funcao;
-        this.salario = salario;
         this.email = email;
+        this.senha = senha;
     }
 
     async save(){
-        const novoCliente = new cliente({
+        const novoCliente = new clienteSchema({
         nome: this.nome = nome,
         sobrenome: this.sobrenome = sobrenome,
         cpf: this.cpf = cpf,
         nascimento: this.nascimento = nascimento,
         valor: this.valor = valor,
         telefone: this.telefone = telefone,
-        funcao: this.funcao = funcao,
-        salario: this.salario = salario,
-        email: this.email = email
+        email: this.email = email,
+        senha: this.senha = senha
+
         });
 
         return await novoCliente.save();

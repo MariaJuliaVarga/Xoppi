@@ -1,4 +1,4 @@
-import fornecedor from "./fornecedorSchema";
+import fornecedorSchema from "./fornecedorSchema.js";
 class fornecedor{
     constructor(razaoSocial, cnpj){
         this.razaoSocial = razaoSocial;
@@ -6,7 +6,7 @@ class fornecedor{
     }
 
     async save(){
-        const novoFornecedor = new fornecedor({
+        const novoFornecedor = new fornecedorSchema({
             razaoSocial: this.razaoSocial,
             cnpj: this.cnpj
         });
