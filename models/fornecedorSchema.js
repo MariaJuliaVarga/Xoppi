@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const fornecedorSchema = new mongoose.Schema(
     {
         razaoSocial : {type: String, required: true},
-        cnpj : {type: String, required: true}
+        cnpj : {type: Number, required: true}
     },
     {
         timestamps: true,

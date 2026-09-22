@@ -3,18 +3,18 @@ import cliente from "../models/cliente.js";
 class clienteController{
     static async createCliente(req, res){
         try{
-            const {nome, sobrenome, cpf, nascimento, telefone, funcao, salario, email, senha } = req.body;
-
-            const novoCliente = new cliente({
+            const {nome, sobrenome, cpf, nascimento, telefone, email, senha } = req.body;
+            const foto = req.file ? req.file.filename : null;
+            const novoCliente = new cliente(
                 nome, 
                 sobrenome,
                 cpf,
                 nascimento,
                 telefone,
-                funcao,
-                salario,
                 email,
-                senha });
+                senha, 
+                foto
+            );
             await novoCliente.save();
             res.status(201).json(novoCliente);
         }
@@ -54,7 +54,7 @@ class clienteController{
     static async updateCliente(req, res){
         try{
             const {id} = req.params;
-            const {nome, sobrenome, cpf, nascimento, telefone, funcao, salario, email, senha } = req.body; 
+            const {nome, sobrenome, cpf, nascimento, telefone, funcao, salario, email, senha, foto } = req.body; 
             
         const clienteAtualizado = {
             nome, 
@@ -65,7 +65,8 @@ class clienteController{
             funcao,
             salario,
             email,
-            senha
+            senha,
+            foto
         }; 
             await cliente.updateCliente(id, clienteAtualizado); 
         }

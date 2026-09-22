@@ -13,17 +13,17 @@ class funcionario{
     }
 
     async save(){
-        const novoFuncionario = new funcionarioSchema({
-        nome: this.nome = nome,
-        sobrenome: this.sobrenome = sobrenome,
-        cpf: this.cpf = cpf,
-        nascimento: this.nascimento = nascimento,
-        valor: this.valor = valor,
-        telefone: this.telefone = telefone,
-        funcao: this.funcao = funcao,
-        salario: this.salario = salario,
-        email: this.email = email
-        });
+        const novoFuncionario = new funcionarioSchema(
+        nome,
+        sobrenome,
+        cpf,
+        nascimento,
+        valor,
+        telefone,
+        funcao,
+        salario,
+        email
+        );
 
         return await novoFuncionario.save();
     }

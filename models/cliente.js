@@ -1,26 +1,26 @@
 import clienteSchema from "./clienteSchema.js";
 class cliente{
-    constructor(nome, sobrenome, cpf, nascimento, telefone, email, senha){
+    constructor(nome, sobrenome, cpf, nascimento, telefone, email, senha, foto){
         this.nome = nome;
         this.sobrenome = sobrenome;
         this.cpf = cpf;
         this.nascimento = nascimento;
-        this.valor = valor;
         this.telefone = telefone;
         this.email = email;
         this.senha = senha;
+        this.foto = foto;
     }
 
     async save(){
         const novoCliente = new clienteSchema({
-        nome: this.nome = nome,
-        sobrenome: this.sobrenome = sobrenome,
-        cpf: this.cpf = cpf,
-        nascimento: this.nascimento = nascimento,
-        valor: this.valor = valor,
-        telefone: this.telefone = telefone,
-        email: this.email = email,
-        senha: this.senha = senha
+        nome: this.nome,
+        sobrenome: this.sobrenome,
+        cpf: this.cpf,
+        nascimento: this.nascimento,
+        telefone: this.telefone,
+        email: this.email,
+        senha: this.senha,
+        foto: this.foto
 
         });
 

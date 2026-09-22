@@ -26,11 +26,11 @@ router.get('/fornecedor/cadastrar', fornecedorController.renderCadastrarForneced
 router.get('/fornecedores', fornecedorController.renderFornecedores);
 router.get('/fornecedor/:id', fornecedorController.renderFornecedor);
 
-router.post('/clientes', clienteController.createCliente);
-router.get('/Clientes', clienteController.getAllCliente);
-router.put('/clientes/:id', clienteController.updateCliente);
-router.delete('/clientes/:id', clienteController.deletarCliente);
-router.get('/clientes/cadastrar', clienteController.renderCadastrarCliente);
-router.get('/clientes', clienteController.renderClientes);
+router.post("/cliente", upload.single("foto"), clienteController.createCliente);
+router.get('/Cliente', clienteController.getAllCliente);
+router.put('/cliente/:id', clienteController.updateCliente);
+router.delete('/cliente/:id', clienteController.deletarCliente);
+router.get('/cliente/cadastrar', clienteController.renderCadastrarCliente);
+router.get('/cliente', clienteController.renderClientes);
 router.get('/cliente/:id', clienteController.renderCliente);
 export default router;

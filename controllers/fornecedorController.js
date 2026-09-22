@@ -5,10 +5,10 @@ class fornecedorController{
         try{
             const {razaoSocial,cnpj} = req.body;
 
-            const novoFornecedor = new fornecedor({
+            const novoFornecedor = new fornecedor(
                 razaoSocial,
                 cnpj
-            })
+            );
             await novoFornecedor.save();
             res.status(201).json(novoFornecedor);
         }
