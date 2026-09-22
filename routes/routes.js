@@ -16,6 +16,7 @@ router.delete('/produto/:id',produtoController.deletarProduto);
 router.get('/produto/cadastrar', produtoController.renderCadastrarProduto);
 router.get('/produtos', produtoController.renderProdutos);
 router.get('/produto/:id', produtoController.renderProduto);
+router.get('/produto/editar/:id', produtoController.renderEditarProduto);
 
 router.post('/fornecedor', fornecedorController.createFornecedor);
 router.get('/fornecedor', fornecedorController.getAllFornecedor);
@@ -24,6 +25,7 @@ router.delete('/fornecedor/:id', fornecedorController.deletarFornecedor);
 router.get('/fornecedor/cadastrar', fornecedorController.renderCadastrarFornecedor);
 router.get('/fornecedores', fornecedorController.renderFornecedores);
 router.get('/fornecedor/:id', fornecedorController.renderFornecedor);
+router.get('/fornecedor/editar/:id', fornecedorController.renderEditarFornecedor);
 
 // Rotas de login
 router.post('/cliente/login', upload.none(), clienteController.loginCliente);
@@ -36,6 +38,7 @@ router.delete('/cliente/:id', autenticarToken, clienteController.deletarCliente)
 router.get('/cliente/cadastrar', clienteController.renderCadastrarCliente);
 router.get('/clientes', clienteController.renderClientes); // Rota /clientes ajustada para não conflitar
 router.get('/cliente/:id', autenticarToken, clienteController.renderCliente);
+router.get('/cliente/editar/:id', autenticarToken, clienteController.renderEditarCliente);
 
 router.post("/funcionario", upload.single("foto"), funcionarioController.createFuncionario);
 router.put('/funcionario/:id',upload.single('foto'), funcionarioController.updateFuncionario);
@@ -45,5 +48,6 @@ router.delete('/funcionario/:id', funcionarioController.deletarFuncionario);
 router.get('/funcionario/cadastrar', funcionarioController.renderCadastrarFuncionario);
 router.get('/funcionario', funcionarioController.renderFuncionarios);
 router.get('/funcionario/:id', funcionarioController.renderFuncionario);
+router.get('/funcionario/editar/:id', funcionarioController.renderEditarFuncionario);
 
 export default router;

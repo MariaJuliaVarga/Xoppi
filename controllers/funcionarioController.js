@@ -133,6 +133,27 @@ static async renderFuncionario(req, res){
         res.status(500).send('Erro ao carregar página do funcionario');
     }
 }
+
+    // Renderiza a página de edição de funcionario
+    static async renderEditarFuncionario(req, res){
+        try{
+            const { id } = req.params;
+
+            const funcionarioExistente = await funcionario.findById(id);
+
+            if(!funcionarioExistente){
+                return res.status(404).send('Funcionario não encontrado');
+            }
+
+            res.render('editar-funcionario', {
+                funcionario: funcionarioExistente
+            });
+        }
+        catch(error){
+            console.error('Erro ao carregar página de edição do funcionario:', error);
+            res.status(500).send('Erro ao carregar página de edição do funcionario');
+        }
+    }
 }
 
 export default funcionarioController;

@@ -120,6 +120,27 @@ class fornecedorController{
             res.status(500).send('Erro ao carregar página do fornecedor');
         }
     }
+
+        // Renderiza a página de edição de fornecedor
+    static async renderEditarFornecedor(req, res){
+        try{
+            const { id } = req.params;
+
+            const fornecedorExistente = await fornecedor.findById(id);
+
+            if(!fornecedorExistente){
+                return res.status(404).send('Fornecedor não encontrado');
+            }
+
+            res.render('editar-fornecedor', {
+                fornecedor: fornecedorExistente
+            });
+        }
+        catch(error){
+            console.error('Erro ao carregar página de edição do fornecedor:', error);
+            res.status(500).send('Erro ao carregar página de edição do fornecedor');
+        }
+    }
 }
 
 export default fornecedorController;

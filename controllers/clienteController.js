@@ -194,6 +194,26 @@ static async renderCliente(req, res){
         res.status(500).send('Erro ao carregar página do cliente');
     }
 }
+
+static async renderEditarCliente(req, res){
+    try{
+        const { id } = req.params;
+
+        const clienteExistente = await cliente.findById(id);
+
+        if(!clienteExistente){
+            return res.status(404).send('Cliente não encontrado');
+        }
+
+        res.render('editar-cliente', {
+            cliente: clienteExistente
+        });
+    }
+    catch(error){
+        console.error('Erro ao carregar página de edição do cliente:', error);
+        res.status(500).send('Erro ao carregar página de edição do cliente');
+    }
+}
 }
 
 export default clienteController;

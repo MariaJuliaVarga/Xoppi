@@ -133,6 +133,27 @@ class produtoController{
             res.status(500).send('Erro ao carregar página do produto');
         }
     }
+
+        // Renderiza a página de edição de produto
+    static async renderEditarProduto(req, res){
+        try{
+            const { id } = req.params;
+
+            const produtoExistente = await produto.findById(id);
+
+            if(!produtoExistente){
+                return res.status(404).send('Produto não encontrado');
+            }
+
+            res.render('editar-produto', {
+                produto: produtoExistente
+            });
+        }
+        catch(error){
+            console.error('Erro ao carregar página de edição do produto:', error);
+            res.status(500).send('Erro ao carregar página de edição do produto');
+        }
+    }
  
 }
 
